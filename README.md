@@ -1,13 +1,30 @@
 # Whisper
 Caption creation project using AI Whisper
 
-##Whisper JAX
+## Whisper JAX
 - Whisper JAX LARGE-V2 모델을 활용한 자막 생성 GUI 입니다.
-- 해당 코드를 Window 환경에서 실행 할 경우, JAX 는 GPU에서 가동되지 못함을 양지하여 주시기 바랍니다.
-- 코드 기준으로 mp4파일만 업로드 가능하니 확인 부탁드립니다.
+- 기존 Windows 개발 환경에서는 JAX가 GPU를 사용하지 못했습니다. 실행 환경을 확인해 주세요.
+- 현재 코드는 MP4 영상을 기준으로 만들었습니다.
 - 영상을 이용하여 자막을 추출하면 많은시간이 소요되기 때문에 ffmpeg을 활용하여 오디오만 추출 한 후 동작하게 되어있습니다. 
-- 가상환경 생성시 필요한 라이브러리 및 버전은 다음과 같습니다.
-- name: myenv
+## 실행 방법
+
+1. [myenv.yaml](myenv.yaml)에 정리된 라이브러리와 버전을 확인해 주세요. 기존 Windows 개발 환경 기록이라 패키지나 설치 경로는 환경에 맞게 조정이 필요할 수 있습니다.
+2. [main.py](main.py)의 ffmpeg 경로(`D:\ffmpeg\ffmpeg.exe`)를 설치한 위치에 맞춰 주세요.
+3. 필요한 패키지가 설치된 Python 환경에서 아래 명령으로 실행해 주세요.
+
+```shell
+python main.py
+```
+
+4. **찾아보기**에서 MP4 영상을 선택하고 **자막생성**을 눌러 주세요.
+5. 완료되면 영상과 같은 폴더에 `영상이름_largev2.srt`가 저장됩니다. 중간에 만든 `영상이름_audio.wav`는 정상 완료 후 삭제됩니다.
+
+## 기존 개발 환경
+
+당시 사용한 라이브러리와 버전입니다.
+
+```yaml
+name: myenv
 channels:
   - anaconda
   - conda-forge
@@ -92,3 +109,4 @@ dependencies:
       - whisper-jax==0.0.1
       - zipp==3.17.0
 prefix: D:\Anaconda3_envs\myenv
+```
