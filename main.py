@@ -39,9 +39,13 @@ def whisper_jax():
         audio_path = video_path.replace(".mp4", "_audio.wav")
         listbox3.insert('end',
                         "추론에 필요한 저용량 오디오파일 출력 시작 : ffmpeg -i " + video_path + " -ar 16000 -ac 1 -b:a 96K -acodec pcm_s16le " + audio_path)
-        subprocess.run(
-            ['D:\\ffmpeg\\ffmpeg.exe', '-i', video_path, '-ar', '16000', '-ac', '1', '-b:a', '96K', '-acodec',
-             'pcm_s16le', audio_path])
+        try:
+            subprocess.run(
+                ['D:\\ffmpeg\\ffmpeg.exe', '-i', video_path, '-ar', '16000', '-ac', '1', '-b:a', '96K', '-acodec',
+                 'pcm_s16le', audio_path], check=True)
+        except (OSError, subprocess.CalledProcessError) as error:
+            messagebox.showerror("Error", f"오디오 변환에 실패했습니다. ffmpeg 경로와 영상 파일을 확인해 주세요.\n{error}")
+            return
         listbox2.insert(0, "변환된 오디오파일 : " + audio_path)
         run_in_background(generate_subtitle, (video_path, audio_path))
 
